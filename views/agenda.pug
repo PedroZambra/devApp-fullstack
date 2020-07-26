@@ -1,0 +1,59 @@
+extends layout
+ 
+block content
+
+  header
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-3
+      a.navbar-brand(href='/') Dev App
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/') Home 
+          li.nav-item.active
+            a.nav-link(href='/agenda') Agenda
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='canales') Canales
+          li.nav-item
+            a.nav-link(href='/about') Sobre mi  
+  section.row.container-fluid
+    div.col.mb-4
+      h3.text-center Agenda de recursos
+    div.col-12
+    div.col-4.col-sm-2.text-center
+      input.btn-block.p-1.mb-3(type="text" name="filter" placeholder="Buscador")
+      button.btn.btn-outline-primary(type="button" data-toggle="modal" data-target="#myModal") Añadir recurso
+      //- Modal
+      #myModal.modal.fade.mt-5(tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true")
+          div.modal-dialog
+              div.modal-content
+                  form(action="/agenda" method="POST")
+                    div.modal-header
+                        h5#modalLabel.modal-title Nuevo recurso
+                        button.close(type="button" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    div.modal-body 
+                        p
+                          input.btn-block.p-1(type="text" name="technology" placeholder="Grupo")
+                        p
+                          input.btn-block.p-1(type="text" name="author" placeholder="Autor")
+                        p
+                          input.btn-block.p-1(type="text" name="link" placeholder="Enlace")
+                    div.modal-footer
+                        button.btn.btn-secondary(type="button" data-dismiss="modal") Cerrar
+                        button.btn.btn-primary(type="submit") Guardar
+    div.col
+      each val, index in data
+        div.card.mb-2
+          p.card-header #{data[index].technology}
+          div.card-body
+            h5.card-title #{data[index].author}
+            p.card-text 
+            - var link = `${data[index].link}`
+              a(href=`${link}`) #{data[index].link}
+   
+        
+        
+        

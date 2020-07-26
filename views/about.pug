@@ -1,0 +1,23 @@
+extends layout
+ 
+block content
+
+  header
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-3
+      a.navbar-brand(href='/') Dev App
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/') Home 
+          li.nav-item
+            a.nav-link(href='/agenda') Agenda
+          li.nav-item
+            a.nav-link(href='canales') Canales
+          li.nav-item.active
+            a.nav-link(href='/about') Sobre mi  
+              span.sr-only (current)
+    section.row.container-fluid
+      div.col
+        p Mi nombre es Pedro Zambrano Marin, soy...
