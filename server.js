@@ -10,7 +10,7 @@ const app = express()
 //Middelware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
-
+-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -23,9 +23,11 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 //Routes
 app.get('/', route.index)
 app.get('/agenda', route.agenda)
-app.post('/agenda', route.createLink)
 app.get('/canales', route.canales)
 app.get('/about', route.about)
+
+app.post('/agenda/add', route.createLink)
+app.post('/agenda/delete/:id', route.deleteLink)
 
 //listen
 app.listen(process.env.PORT, () => {

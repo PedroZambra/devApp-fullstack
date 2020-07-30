@@ -24,12 +24,12 @@ block content
     div.col-12
     div.col-4.col-sm-2.text-center
       input.btn-block.p-1.mb-3(type="text" name="filter" placeholder="Buscador")
-      button.btn.btn-outline-primary(type="button" data-toggle="modal" data-target="#myModal") Añadir recurso
-      //- Modal
-      #myModal.modal.fade.mt-5(tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true")
+      button.btn.btn-primary(type="button" data-toggle="modal" data-target="#addModal") Añadir recurso
+      //- ADD MODAL
+      #addModal.modal.fade.mt-5(tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true")
           div.modal-dialog
               div.modal-content
-                  form(action="/agenda" method="POST")
+                  form(action="/agenda/add" method="POST")
                     div.modal-header
                         h5#modalLabel.modal-title Nuevo recurso
                         button.close(type="button" data-dismiss="modal" aria-label="Close")
@@ -46,13 +46,21 @@ block content
                         button.btn.btn-primary(type="submit") Guardar
     div.col
       each val, index in data
-        div.card.mb-2
-          p.card-header #{data[index].technology}
+        div.card.mb-2(id=data[index].id)
+          h5.card-header #{data[index].technology}
           div.card-body
             h5.card-title #{data[index].author}
             p.card-text 
-            - var link = `${data[index].link}`
-              a(href=`${link}`) #{data[index].link}
+              - var link = `${data[index].link}`
+              a(href=`${link}` target="_blank") #{data[index].link}
+            div.d-flex
+              form(action=`` method="POST")
+                button.btn.btn-outline-success.mr-1(type="button" data-action="edit") Actualizar
+              form(action=`/agenda/delete/${data[index].id}` method="POST")
+                button.btn.btn-outline-danger(type="submit") Eliminar
+
+            
+            
    
         
         

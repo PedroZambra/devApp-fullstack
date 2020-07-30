@@ -1,4 +1,4 @@
-const {createLinkDb, getAllLinks} = require('../models/db')
+const {getAllLinks, createLinkDb, deleteLinkDb} = require('../models/db')
 
 exports.index = (req, res) => {
     res.render('index.pug')
@@ -7,7 +7,7 @@ exports.index = (req, res) => {
 exports.agenda = (req, res) => {
     getAllLinks()
         .then(data => {
-            console.log(data)
+            // console.log(data)
             res.render('agenda.pug', {data}) 
         })
     
@@ -27,3 +27,14 @@ exports.createLink = (req, res) => {
         .catch(err => res.render('error.pug', err))
     
 }
+
+exports.deleteLink = (req, res) => {
+    console.log("Estos son los parametros: ", req.params.id)
+    //Posible plantilla de confirmacion y devolver parametro por promesa
+    deleteLinkDb(req.params.id)
+        .then(() => res.redirect('/agenda'))
+        .catch(err => res.render('error.pug', err))
+}
+
+
+

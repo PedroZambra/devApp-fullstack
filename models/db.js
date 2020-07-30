@@ -42,3 +42,16 @@ exports.createLinkDb = data => {
         });
     })
 }
+
+exports.deleteLinkDb = id => {
+    return new Promise((resolve, reject) => {
+        const queryText = `DELETE FROM links WHERE id = ${id}`;
+        connection.query(queryText, (err, result) => {
+            if (err){
+                console.log(err)
+                return reject(err);
+            }
+            resolve(result);
+        });
+    })
+}
