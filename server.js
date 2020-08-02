@@ -1,7 +1,8 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
-    route = require('./routes/index.routes')
+    route = require('./routes/index.routes'),
+    routeLink = require('./routes/link.routes')
 
 require('dotenv').config()
 
@@ -26,8 +27,9 @@ app.get('/agenda', route.agenda)
 app.get('/canales', route.canales)
 app.get('/about', route.about)
 
-app.post('/agenda/add', route.createLink)
-app.post('/agenda/delete/:id', route.deleteLink)
+app.post('/agenda/add', routeLink.createLink)
+app.post('/agenda/delete/:id', routeLink.deleteLink)
+app.post('/agenda/update/:id', routeLink.updateLink)
 
 //listen
 app.listen(process.env.PORT, () => {

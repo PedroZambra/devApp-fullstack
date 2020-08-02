@@ -2,7 +2,7 @@ extends layout
  
 block content
 
-  header
+  header.sticky-top
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-3
       a.navbar-brand(href='/') Dev App
       button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
@@ -20,30 +20,30 @@ block content
             a.nav-link(href='/about') Sobre mi  
   section.row.container-fluid
     div.col.mb-4
-      h3.text-center Agenda de recursos
+      h3.text-center.title Agenda de recursos
     div.col-12
     div.col-4.col-sm-2.text-center
       input.btn-block.p-1.mb-3(type="text" name="filter" placeholder="Buscador")
       button.btn.btn-primary(type="button" data-toggle="modal" data-target="#addModal") Añadir recurso
       //- ADD MODAL
       #addModal.modal.fade.mt-5(tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true")
-          div.modal-dialog
-              div.modal-content
-                  form(action="/agenda/add" method="POST")
-                    div.modal-header
-                        h5#modalLabel.modal-title Nuevo recurso
-                        button.close(type="button" data-dismiss="modal" aria-label="Close")
-                        span(aria-hidden="true") &times;
-                    div.modal-body 
-                        p
-                          input.btn-block.p-1(type="text" name="technology" placeholder="Grupo")
-                        p
-                          input.btn-block.p-1(type="text" name="author" placeholder="Autor")
-                        p
-                          input.btn-block.p-1(type="text" name="link" placeholder="Enlace")
-                    div.modal-footer
-                        button.btn.btn-secondary(type="button" data-dismiss="modal") Cerrar
-                        button.btn.btn-primary(type="submit") Guardar
+        div.modal-dialog
+          div.modal-content
+            form(action="/agenda/add" method="POST")
+              div.modal-header
+                h5#modalLabel.modal-title Nuevo recurso
+                button.close(type="button" data-dismiss="modal" aria-label="Close")
+                span(aria-hidden="true") &times;
+              div.modal-body 
+                p
+                  input.btn-block.p-1(type="text" name="technology" placeholder="Grupo")
+                p
+                  input.btn-block.p-1(type="text" name="author" placeholder="Autor")
+                p
+                  input.btn-block.p-1(type="text" name="link" placeholder="Enlace")
+              div.modal-footer
+                button.btn.btn-secondary(type="button" data-dismiss="modal") Cerrar
+                button.btn.btn-primary(type="submit") Guardar
     div.col
       each val, index in data
         div.card.mb-2(id=data[index].id)
@@ -53,13 +53,28 @@ block content
             p.card-text 
               - var link = `${data[index].link}`
               a(href=`${link}` target="_blank") #{data[index].link}
-            div.d-flex
-              form(action=`` method="POST")
-                button.btn.btn-outline-success.mr-1(type="button" data-action="edit") Actualizar
-              form(action=`/agenda/delete/${data[index].id}` method="POST")
-                button.btn.btn-outline-danger(type="submit") Eliminar
+            div.d-flex.flex-wrap
+              div
+                - var modalID = `modal${data[index].id}`
+                button.btn.btn-outline-success.mr-1(type="button" data-toggle="modal" data-target=`#${modalID}`) Actualizar
+                //- UPDATE MODAL
+                div.modal.fade.mt-5(id=`${modalID}` tabindex="-1" role="dialog" aria-labelledby=`${modalID}` aria-hidden="true")
+                  div.modal-dialog
+                    div.modal-content
+                      form(action=`/agenda/update/${data[index].id}` method="POST")
+                        div.modal-header
+                          h5#modalLabel.modal-title Actualizar recurso
+                          button.close(type="button" data-dismiss="modal" aria-label="Close")
+                          span(aria-hidden="true") &times;
+                        div.modal-body 
+                          input.btn-block.p-1(type="text" name="link" placeholder="Enlace")
+                        div.modal-footer
+                          button.btn.btn-secondary(type="button" data-dismiss="modal") Cerrar
+                          button.btn.btn-success(type="submit") Actualizar
+              div                
+                form(action=`/agenda/delete/${data[index].id}` method="POST")
+                  button.btn.btn-outline-danger(type="submit") Eliminar
 
-            
             
    
         

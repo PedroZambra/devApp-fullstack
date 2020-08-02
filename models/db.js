@@ -55,3 +55,16 @@ exports.deleteLinkDb = id => {
         });
     })
 }
+
+exports.updateLinkDb = (id, newLink) => {
+    return new Promise ((resolve, reject) => {
+        const queryText = `UPDATE links SET link = '${newLink}' WHERE id = ${id}`;
+        connection.query(queryText, (error, results) => {
+            if (error) {
+                console.log(error)
+                return reject(error);
+            };
+            resolve(results);
+          });
+    })
+}
